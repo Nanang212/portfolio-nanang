@@ -32,6 +32,17 @@ class FileUploadService
     }
 
     /**
+     * Upload a regular file (e.g., PDF) to local public disk without conversion.
+     */
+    public function uploadFileLocal(UploadedFile $file, string $folder = 'uploads'): string
+    {
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $path     = "{$folder}/{$filename}";
+        Storage::disk('public')->put($path, file_get_contents($file->getRealPath()));
+        return $path;
+    }
+
+    /**
      * Convert any uploaded image to WebP binary string, with auto-resize.
      * Falls back to original bytes if GD is unavailable or conversion fails.
      *

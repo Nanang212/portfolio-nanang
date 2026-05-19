@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { Save } from 'lucide-react';
 
 export default function AboutEdit({ about }) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         name:          about?.name || 'Nanang Aditya',
         job_title_en:  about?.job_title_en || 'Software Engineer',
         job_title_id:  about?.job_title_id || 'Software Engineer',
@@ -13,6 +13,7 @@ export default function AboutEdit({ about }) {
         email:         about?.email || 'nanangaditya2001@gmail.com',
         github_url:    about?.github_url || 'https://github.com/Nanang212',
         linkedin_url:  about?.linkedin_url || 'https://www.linkedin.com/in/nanang-aditya/',
+        resume:        null,
     });
 
     const field = (name, label, type = 'text') => (
@@ -21,8 +22,9 @@ export default function AboutEdit({ about }) {
             <input
                 type={type}
                 className="input"
-                value={data[name]}
-                onChange={e => setData(name, e.target.value)}
+                value={type === 'file' ? undefined : data[name]}
+                onChange={e => type === 'file' ? setData(name, e.target.files[0]) : setData(name, e.target.value)}
+                accept={type === 'file' && name === 'resume' ? '.pdf' : undefined}
             />
             {errors[name] && <p className="text-red-500 text-xs mt-1">{errors[name]}</p>}
         </div>
@@ -43,7 +45,7 @@ export default function AboutEdit({ about }) {
 
     const submit = (e) => {
         e.preventDefault();
-        put('/admin/about');
+        post('/admin/about');
     };
 
     return (
@@ -68,6 +70,19 @@ export default function AboutEdit({ about }) {
                             {field('job_title_id', 'Job Title (Indonesian)')}
                         </div>
                         {field('email', 'Email', 'email')}
+                    </div>
+
+                    {/* CV Upload */}
+                    <div className="card p-6 space-y-4">
+                        <h3 className="font-semibold text-slate-800 dark:text-white">Upload CV</h3>
+                        <div className="text-sm text-slate-500 dark:text-slate-400 mb-2">
+                            {about?.resume_path ? (
+                                <span>Current CV: <a href="/about/cv" className="text-primary-600 underline" target="_blank" rel="noreferrer">Download existing CV</a></span>
+                            ) : (
+                                <span>No CV uploaded yet.</span>
+                            )}
+                        </div>
+                        {field('resume', 'New CV (PDF only)', 'file')}
                     </div>
 
                     {/* Social links */}

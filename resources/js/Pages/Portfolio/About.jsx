@@ -1,6 +1,6 @@
 import PortfolioLayout from '@/Layouts/PortfolioLayout';
 import { useTranslation } from 'react-i18next';
-import { Code2, Server, Box, Layers, CheckCircle2 } from 'lucide-react';
+import { Code2, Server, Box, Layers, CheckCircle2, FileDown } from 'lucide-react';
 import WorkingIllustration from '@/Components/Portfolio/WorkingIllustration';
 
 const highlights = [
@@ -46,6 +46,14 @@ export default function About({ about }) {
                             <div>
                                 <h2 className="text-2xl font-bold text-primary-600 dark:text-primary-400">{jobTitle}</h2>
                                 <p className="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed text-lg">{bio}</p>
+                                {about?.resume_path && (
+                                    <div className="mt-6">
+                                        <a href="/about/cv" className="btn-secondary inline-flex items-center gap-2">
+                                            <FileDown size={20} />
+                                            Unduh CV
+                                        </a>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Highlights grid */}

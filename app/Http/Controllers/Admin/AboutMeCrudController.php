@@ -22,7 +22,13 @@ class AboutMeCrudController extends Controller
 
     public function update(UpdateAboutMeRequest $request): RedirectResponse
     {
-        $this->aboutMeService->save($request->validated(), $request->file('photo'));
+        \Log::info('About Me Update Request', [
+            'has_resume' => $request->hasFile('resume'),
+            'resume_is_valid' => $request->hasFile('resume') ? $request->file('resume')->isValid() : false,
+            'all_files' => $request->allFiles(),
+        ]);
+        
+        $this->aboutMeService->save($request->validated(), $request->file('photo'), $request->file('resume'));
         return back()->with('success', 'About Me updated.');
     }
 }

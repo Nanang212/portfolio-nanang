@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 // ─── Public Portfolio Routes ──────────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/about/cv', [AboutController::class, 'downloadCv'])->name('about.cv.download');
 Route::get('/experience', [ExperienceController::class, 'index'])->name('experience');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 Route::get('/skills', [SkillController::class, 'index'])->name('skills');
@@ -56,7 +57,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // About Me
     Route::get('/about', [AboutMeCrudController::class, 'edit'])->name('about.edit');
-    Route::put('/about', [AboutMeCrudController::class, 'update'])->name('about.update');
+    Route::post('/about', [AboutMeCrudController::class, 'update'])->name('about.update');
 
     // Messages
     Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');

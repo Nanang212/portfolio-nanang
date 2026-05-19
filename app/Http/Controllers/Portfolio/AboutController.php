@@ -17,4 +17,19 @@ class AboutController extends Controller
             'about' => $this->aboutMeService->get(),
         ]);
     }
+
+    public function downloadCv()
+    {
+        $about = $this->aboutMeService->get();
+        if (!$about || !$about->resume_path) {
+            return back()->with('error', 'CV not found.');
+        }
+
+        $path = storage_path('app/public/' . $about->resume_path);
+        if (!file_exists($path)) {
+            return back()->with('error', 'CV file missing.');
+        }
+
+        return response()->download($path, 'CV.pdf');
+    }
 }

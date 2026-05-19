@@ -17,6 +17,7 @@ class UpdateAboutMeRequest extends FormRequest
             'job_title_en' => 'required|string|max:255',
             'highlights'   => 'nullable|string',
             'photo'        => 'nullable|image|max:2048',
+            'resume'       => 'nullable|file|max:5120',
         ];
     }
 }

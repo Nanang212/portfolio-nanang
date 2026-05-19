@@ -1,7 +1,7 @@
 import PortfolioLayout from '@/Layouts/PortfolioLayout';
 import { Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight, Mail, ChevronDown } from 'lucide-react';
+import { ArrowRight, Mail, ChevronDown, FileDown } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/Components/UI/SocialIcons';
 import WorkingIllustration from '@/Components/Portfolio/WorkingIllustration';
 
@@ -44,6 +44,12 @@ export default function Home({ about, projects, skills }) {
                                 <Link href="/contact" className="btn-secondary">
                                     {t('hero.cta_secondary')}
                                 </Link>
+                                {about?.resume_path && (
+                                    <a href="/about/cv" className="btn-secondary flex items-center gap-2">
+                                        <FileDown size={18}/>
+                                        Unduh CV
+                                    </a>
+                                )}
                             </div>
 
                             {/* Social row */}
